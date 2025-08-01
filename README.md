@@ -1,3 +1,3 @@
 # Eli's Python Practice Repo
 
-I enjoy creating relatively simple, standalone Python scripts to augment my aptitude. This repository simply functions as a base, allowing me to work on the same script across multiple devices.
+I enjoy creating relatively simple, standalone Python scripts as a means to gain real-world programming experience. This repository functions as a base for these scripts, allowing me to work on them across multiple devices.
