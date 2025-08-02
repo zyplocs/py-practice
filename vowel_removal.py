@@ -1,4 +1,4 @@
-def consonant_prompt():
+def alpha_prompt():
     while True:
         usr_in = input("Enter an alphabetical string: ")
 
@@ -20,4 +20,4 @@ def consonant_prompt():
 
 
 if __name__ == "__main__":
-    consonant_prompt()
+    alpha_prompt()
