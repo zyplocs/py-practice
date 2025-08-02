@@ -3,7 +3,7 @@ def alpha_prompt():
         usr_in = input("Enter an alphabetical string: ")
 
         if usr_in.isalpha():
-            vowels = ("a", "e", "i", "o", "u")
+            vowels = {"a", "e", "i", "o", "u"}
             stringy_list = list(usr_in)
             chars = []
             
