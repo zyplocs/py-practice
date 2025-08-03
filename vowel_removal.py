@@ -6,13 +6,13 @@ def alpha_prompt():
             vowels = {"a", "e", "i", "o", "u"}
             stringy_in = list(usr_in)
             chars = []
-            
+
             for z in stringy_in:
                 if z.lower() not in vowels:
                     chars.append(z)
-            
+
             vowelless = "".join(chars)
-                
+
             print(f"Result: {vowelless}")
             break
         else:
@@ -25,7 +25,7 @@ def censor_prompt():
         if usr_in:
             vowels = {"a", "e", "i", "o", "u"}
             censored = []
-            
+
             for i, val in enumerate(usr_in):
                 if val.lower() in vowels:
                     print(f"Vowel found at index {i}")
