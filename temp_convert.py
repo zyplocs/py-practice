@@ -1,4 +1,5 @@
 from typing import SupportsFloat
+from math import isfinite
 
 class NumericTypeError(TypeError):
     """
@@ -13,7 +14,7 @@ def _to_float(x: SupportsFloat, *, name: str) -> float:
         y = float(x)
     except Exception as e:
         raise NumericTypeError(f"{name.capitalize()} must be numeric; got {type(x).__name__}!") from e
-    if not (y == y and abs(y) != float("inf")):
+    if not (isfinite(y)):
         raise ValueError(f"{name} must be finite; got {y}!")
     return y
 
