@@ -8,11 +8,13 @@ def _to_float(x: SupportsFloat | str, *, name: str) -> float:
     try:
         if isinstance(x, bool):
             raise TypeError("Booleans are not accepted!")
+        
         y = float(x)
     except (TypeError, ValueError) as e:
         raise NumericTypeError(f"{name.capitalize()} must be numeric; got {type(x).__name__}!") from e
     if not isfinite(y):
         raise ValueError(f"{name} must be finite; got {y}!")
+    
     return y
 
 def convert_temperature(temp: SupportsFloat | str, unit: str) -> tuple[float, str]:
