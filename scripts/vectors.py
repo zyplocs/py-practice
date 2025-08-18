@@ -35,7 +35,7 @@ def unit_vector(vec: tuple[SupportsFloat, SupportsFloat]
     x, y = vec
     magnitude = vector_mag(vec)
     if magnitude <= 1e-6:
-        print("Magnitude is null, double-check input vector...")
+        raise ValueError(f"{magnitude} is an illegal magnitude!")
     else:
         unit_x = x / magnitude
         unit_y = y / magnitude
