@@ -1,5 +1,7 @@
-from typing import SupportsFloat
+from typing import SupportsFloat, TypeAlias
 from math import isfinite, sqrt
+
+Vector2D: TypeAlias = tuple[float, float]
 
 class NumericTypeError(TypeError):
     """Raised when a parameter expects a numeric argument but receives a non-numeric argument."""
@@ -18,30 +20,27 @@ def _to_float(x: SupportsFloat | str, *, name: str) -> float:
     
     return y
 
-def vector_sum(vec1: tuple[SupportsFloat, SupportsFloat],
-               vec2: tuple[SupportsFloat, SupportsFloat]
-) -> tuple[float, float]:
+def vector_sum(vec1: Vector2D, vec2: Vector2D) -> Vector2D:
     x_new = vec1[0] + vec2[0]
     y_new = vec1[1] + vec2[1]
     return (x_new, y_new)
 
-def vector_mag(vec: tuple[SupportsFloat, SupportsFloat]) -> float:
+def vector_mag(vec: Vector2D) -> float:
     x, y = vec
     magnitude = sqrt((x**2) + (y**2))
     return magnitude
 
-def unit_vector(vec: tuple[SupportsFloat, SupportsFloat]
-) -> tuple[SupportsFloat, SupportsFloat]:
+def unit_vector(vec: Vector2D) -> Vector2D:
     x, y = vec
     magnitude = vector_mag(vec)
     if magnitude <= 1e-6:
-        raise ValueError(f"{magnitude} is an illegal magnitude!")
-    else:
-        unit_x = x / magnitude
-        unit_y = y / magnitude
-        return (unit_x, unit_y)
+        raise ValueError("Vector magnitude is too small to normalize!")
 
-def parse_vec(s: str, name: str) -> tuple[float, float]:
+    unit_y = y / magnitude
+    unit_x = x / magnitude
+    return (unit_x, unit_y)
+
+def parse_vec(s: str, name: str) -> Vector2D:
     s = s.strip()
     dims = [d.strip() for d in s.split(",")]
     if len(dims) != 2:
@@ -57,7 +56,7 @@ def main():
         vec1_raw = input("> Vector 1: ").strip()
         if vec1_raw.lower() in {"q", "quit", ""}:
             break
-        vec2_raw = input("> Vector 2: ")
+        vec2_raw = input("> Vector 2: ").strip()
         if vec2_raw.lower() in {"q", "quit", ""}:
             break
 
