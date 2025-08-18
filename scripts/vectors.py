@@ -41,13 +41,44 @@ def unit_vector(vec: tuple[SupportsFloat, SupportsFloat]
         unit_y = y / magnitude
         return (unit_x, unit_y)
 
+def parse_vec(s: str, name: str) -> tuple[float, float]:
+    s = s.strip()
+    dims = [d.strip() for d in s.split(",")]
+    if len(dims) != 2:
+        raise ValueError(f"{name} must be two comma-separated numbers!")
+    x = _to_float(dims[0], name=f"{name} x")
+    y = _to_float(dims[1], name=f"{name} y")
+    return (x, y)
+
 def main():
     print("Calculate an output vector from two inputs. Separate dimensions with a comma")
 
     while True:
-        usr_in_1 = input("> Vector 1: ")
-        usr_in_2 = input("> Vector 2: ")
-    ...
+        vec1_raw = input("> Vector 1: ").strip()
+        if vec1_raw.lower() in {"q", "quit", ""}:
+            break
+        vec2_raw = input("> Vector 2: ")
+        if vec2_raw.lower() in {"q", "quit", ""}:
+            break
+
+        try:
+            vec1 = parse_vec(vec1_raw, "Vector 1")
+            vec2 = parse_vec(vec2_raw, "Vector 2")
+
+            new_vec = vector_sum(vec1, vec2)
+            new_mag = vector_mag(new_vec)
+            new_unit_vec = unit_vector(new_vec)
+
+            print(f"Sum vector: ({new_vec[0]:.2f}, {new_vec[1]:.2f})")
+            print(f"Magnitude: {new_mag:.3f}")
+            print(f"Unit vector: ({new_unit_vec[0]:.2f}, {new_unit_vec[1]:.2f})")
+            break
+        except NumericTypeError as e:
+            print(f"Input error: {e}")
+            continue
+        except ValueError as e:
+            print(f"Invalid value: {e}")
+            continue
 
 
 if __name__ == "__main__":
