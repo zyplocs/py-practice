@@ -2,6 +2,9 @@ from typing import SupportsFloat, TypeAlias
 from math import isfinite, sqrt
 
 Vector2D: TypeAlias = tuple[float, float]
+ScalarLike: TypeAlias = SupportsFloat | str
+Vector2DLike: TypeAlias = tuple[ScalarLike, ScalarLike]
+EPSILON = 1e-6  # close to zero threshold
 
 class NumericTypeError(TypeError):
     """Raised when a parameter expects a numeric argument but receives a non-numeric argument."""
@@ -20,25 +23,30 @@ def _to_float(x: SupportsFloat | str, *, name: str) -> float:
     
     return y
 
-def vector_sum(vec1: Vector2D, vec2: Vector2D) -> Vector2D:
-    x_new = vec1[0] + vec2[0]
-    y_new = vec1[1] + vec2[1]
-    return (x_new, y_new)
+def _coerce_vec(vec: Vector2DLike, name: str) -> Vector2D:
+    x = _to_float(vec[0], name=f"{name} x")
+    y = _to_float(vec[1], name=f"{name} y")
+    
+    return (x, y)
 
-def vector_mag(vec: Vector2D) -> float:
-    x, y = vec
-    magnitude = sqrt((x**2) + (y**2))
-    return magnitude
+def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vector2D:
+    v1 = _coerce_vec(vec1, "vec1")
+    v2 = _coerce_vec(vec2, "vec2")
+    
+    return (v1[0] + v2[0], v1[1] + v2[1])
 
-def unit_vector(vec: Vector2D) -> Vector2D:
-    x, y = vec
-    magnitude = vector_mag(vec)
-    if magnitude <= 1e-6:
-        raise ValueError("Vector magnitude is too small to normalize!")
+def vector_mag(vec: Vector2DLike, *, name: str="vec") -> float:
+    x, y = _coerce_vec(vec, name)
+    
+    return sqrt((x**2) + (y**2))
 
-    unit_y = y / magnitude
-    unit_x = x / magnitude
-    return (unit_x, unit_y)
+def unit_vector(vec: Vector2DLike, *, name: str="vec") -> Vector2D:
+    x, y = _coerce_vec(vec, name)
+    mag = sqrt(x**2 + y**2)
+    if mag <= EPSILON:
+        raise ValueError(f"{name} magnitude is too small to normalize (<= {EPSILON})!")
+
+    return (x/mag, y/mag)
 
 def parse_vec(s: str, name: str) -> Vector2D:
     s = s.strip()
@@ -47,6 +55,7 @@ def parse_vec(s: str, name: str) -> Vector2D:
         raise ValueError(f"{name} must be two comma-separated numbers!")
     x = _to_float(dims[0], name=f"{name} x")
     y = _to_float(dims[1], name=f"{name} y")
+    
     return (x, y)
 
 def main():
