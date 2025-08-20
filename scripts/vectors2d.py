@@ -1,9 +1,9 @@
-from typing import SupportsFloat, TypeAlias
+from typing import SupportsFloat
 from math import isfinite, sqrt
 
-Vector2D: TypeAlias = tuple[float, float]
-ScalarLike: TypeAlias = SupportsFloat | str
-Vector2DLike: TypeAlias = tuple[ScalarLike, ScalarLike]
+type Vector2D = tuple[float, float]
+type ScalarLike = SupportsFloat | str
+type Vector2DLike = tuple[ScalarLike, ScalarLike]
 EPSILON = 1e-6  # close to zero threshold
 
 class NumericTypeError(TypeError):
@@ -80,6 +80,7 @@ def main():
             print(f"Sum vector: ({new_vec[0]:.2f}, {new_vec[1]:.2f})")
             print(f"Magnitude: {new_mag:.3f}")
             print(f"Unit vector: ({new_unit_vec[0]:.2f}, {new_unit_vec[1]:.2f})")
+            selection = input(f"Run again? [y/n]: ")
             break
         except NumericTypeError as e:
             print(f"Input error: {e}")
