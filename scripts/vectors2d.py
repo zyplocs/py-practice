@@ -80,7 +80,6 @@ def main():
             print(f"Sum vector: ({new_vec[0]:.2f}, {new_vec[1]:.2f})")
             print(f"Magnitude: {new_mag:.3f}")
             print(f"Unit vector: ({new_unit_vec[0]:.2f}, {new_unit_vec[1]:.2f})")
-            selection = input(f"Run again? [y/n]: ")
             break
         except NumericTypeError as e:
             print(f"Input error: {e}")
