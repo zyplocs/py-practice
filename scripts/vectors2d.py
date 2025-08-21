@@ -9,14 +9,14 @@ EPSILON = 1e-6  # close to zero threshold
 class NumericTypeError(TypeError):
     """Raised when a parameter expects a numeric argument but receives a non-numeric argument."""
 
-def _to_float(input: SupportsFloat | str, *, name: str) -> float:
+def _to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
     try:
-        if isinstance(input, bool):
+        if isinstance(usr_input, bool):
             raise TypeError("Booleans are not accepted!")
 
-        floating = float(input)
+        floating = float(usr_input)
     except (TypeError, ValueError) as e:
-        raise NumericTypeError(f"{name.capitalize()} must be numeric; got {type(input).__name__}!") from e
+        raise NumericTypeError(f"{name.capitalize()} must be numeric; got {type(usr_input).__name__}!") from e
 
     if not isfinite(floating):
         raise ValueError(f"{name} must be finite; got {floating}!")
