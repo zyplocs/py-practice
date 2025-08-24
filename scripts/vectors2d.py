@@ -1,5 +1,5 @@
 from typing import SupportsFloat
-from math import isfinite, sqrt
+from math import isfinite, hypot
 
 type Vector2D = tuple[float, float]
 type ScalarLike = SupportsFloat | str
@@ -38,11 +38,11 @@ def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vector2D:
 def vector_mag(vec: Vector2DLike, *, name: str="vec") -> float:
     x, y = _coerce_vec(vec, name)
 
-    return sqrt((x**2) + (y**2))
+    return hypot(x, y)
 
 def unit_vector(vec: Vector2DLike, *, name: str="vec") -> Vector2D:
     x, y = _coerce_vec(vec, name)
-    mag = sqrt(x**2 + y**2)
+    mag = hypot(x, y)
     if mag <= EPSILON:
         raise ValueError(f"{name} magnitude is too small to normalize (<= {EPSILON})!")
 
