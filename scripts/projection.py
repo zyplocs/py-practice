@@ -1,5 +1,5 @@
 from typing import SupportsFloat
-from math import isfinite, sqrt
+from math import isfinite, hypot
 
 type Vector2D = tuple[float, float]
 type ScalarLike = SupportsFloat | str
@@ -24,6 +24,9 @@ def _to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
     return floating
 
 def _coerce_vec(vec: Vector2DLike, name: str) -> Vector2D:
+    if len(vec) != 2:
+        raise ValueError(f"{name} must have length 2; got {len(vec)}")
+
     x = _to_float(vec[0], name=f"{name} x")
     y = _to_float(vec[1], name=f"{name} y")
 
@@ -34,3 +37,8 @@ def dot(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
     v2 = _coerce_vec(vec2, "vec2")
 
     return sum(v1i*v2i for v1i, v2i in zip(v1, v2))
+
+def norm(vec: Vector2DLike, *, name: str="vec") -> float:
+    x, y = _coerce_vec(vec, name)
+    
+    return hypot(x, y)

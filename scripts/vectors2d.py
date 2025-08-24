@@ -24,6 +24,9 @@ def _to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
     return floating
 
 def _coerce_vec(vec: Vector2DLike, name: str) -> Vector2D:
+    if len(vec) != 2:
+        raise ValueError(f"{name} must have length 2; got {len(vec)}")
+
     x = _to_float(vec[0], name=f"{name} x")
     y = _to_float(vec[1], name=f"{name} y")
 
