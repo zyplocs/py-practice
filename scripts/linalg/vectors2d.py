@@ -1,5 +1,5 @@
 import guards as gd
-from guards import NumericTypeError
+from guards import NumericTypeError, Vector2DLike, Vector2D
 from math import hypot
 
 EPSILON = 1e-6  # close to zero threshold
