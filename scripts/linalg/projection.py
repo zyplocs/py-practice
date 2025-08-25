@@ -2,8 +2,6 @@ import guards as gd
 from guards import Vector2D, Vector2DLike
 from math import hypot
 
-EPSILON = 1e-6  # close to zero threshold
-
 def dot(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
     v1 = gd._coerce_vec(vec1, "vec1")
     v2 = gd._coerce_vec(vec2, "vec2")
