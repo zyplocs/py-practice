@@ -43,7 +43,6 @@ def l2_norm(vec: Vector2DLike, *, name: str="vec") -> float:
     
     return hypot(x, y)
 
-# 
 def unit_vector(vec: Vector2DLike, *, eps: float=1e-12, name: str="vec") -> Vector2D | None:
     x, y = _coerce_vec(vec, name)
 
