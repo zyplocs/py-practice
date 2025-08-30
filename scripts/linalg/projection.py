@@ -1,6 +1,7 @@
 import guards as gd
+import vectors2d as v2
 from guards import Vector2D, Vector2DLike
-from math import hypot
+from math import hypot, acos, degrees
 
 def dot(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
     v1 = gd._coerce_vec(vec1, "vec1")
@@ -20,3 +21,10 @@ def unit_vector(vec: Vector2DLike, *, eps: float=1e-12, name: str="vec") -> Vect
     if mag <= eps:
         return None
     return (x/mag, y/mag)
+
+def angle(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
+    dot_prod = dot(vec1, vec2)
+    quotient = dot_prod / (v2.vector_mag(vec1) * v2.vector_mag(vec2))
+    angle_rad = acos(quotient)
+
+    return degrees(angle_rad)
