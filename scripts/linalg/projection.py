@@ -1,13 +1,13 @@
-import guards as gd
-import vectors2d as v2
 from guards import Vector2D, Vector2DLike
 from math import hypot, atan2, degrees
+import guards as gd
+import vectors2d as v2
 
 def dot(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
-    v1 = gd._coerce_vec(vec1, "vec1")
-    v2 = gd._coerce_vec(vec2, "vec2")
+    x = gd._coerce_vec(vec1, "vec1")
+    y = gd._coerce_vec(vec2, "vec2")
 
-    return sum(v1i*v2i for v1i, v2i in zip(v1, v2))
+    return sum(x_i*y_i for x_i, y_i in zip(x, y))
 
 def l2_norm(vec: Vector2DLike, *, name: str="vec") -> float:
     x, y = gd._coerce_vec(vec, name)
