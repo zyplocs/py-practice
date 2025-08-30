@@ -28,7 +28,7 @@ def unit_vector(vec: Vector2DLike, *, eps: float=1e-12, name: str="vec") -> Vect
         return None
     return (x/mag, y/mag)
 
-def angle_2d(vec1: Vector2DLike, vec2: Vector2DLike, *, eps: float | None=None) -> float:
+def angle_2d(vec1: Vector2DLike, vec2: Vector2DLike, *, signed: bool=False, eps: float | None=None) -> float:
     x1, y1 = gd.coerce_vec2d(vec1, "vec1")
     x2, y2 = gd.coerce_vec2d(vec2, "vec2")
 
@@ -42,5 +42,8 @@ def angle_2d(vec1: Vector2DLike, vec2: Vector2DLike, *, eps: float | None=None) 
     dot_prod = dot_2d(vec1, vec2)
     cross_prod = cross_2d(vec1, vec2)
 
-    angle_rad = atan2(abs(cross_prod), dot_prod)
+    if signed:
+        angle_rad = atan2(cross_prod, dot_prod)
+    else:
+        angle_rad = atan2(abs(cross_prod), dot_prod)
     return degrees(angle_rad)
