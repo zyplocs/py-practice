@@ -1,7 +1,7 @@
 import guards as gd
 import vectors2d as v2
 from guards import Vector2D, Vector2DLike
-from math import hypot, acos, degrees
+from math import hypot, atan2, degrees
 
 def dot(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
     v1 = gd._coerce_vec(vec1, "vec1")
@@ -22,9 +22,19 @@ def unit_vector(vec: Vector2DLike, *, eps: float=1e-12, name: str="vec") -> Vect
         return None
     return (x/mag, y/mag)
 
-def angle(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
-    dot_prod = dot(vec1, vec2)
-    quotient = dot_prod / (v2.vector_mag(vec1) * v2.vector_mag(vec2))
-    angle_rad = acos(quotient)
+def angle(vec1: Vector2DLike, vec2: Vector2DLike, *, eps: float | None=None) -> float:
+    x1, y1 = gd._coerce_vec(vec1, "vec1")
+    x2, y2 = gd._coerce_vec(vec2, "vec2")
 
+    m1 = hypot(x1, y1)
+    m2 = hypot(x2, y2)
+
+    threshold = v2.EPSILON if eps is None else eps
+    if m1 <= threshold or m2 <= threshold:
+        raise ValueError(f"Vector magnitude is too small (<= {threshold}!)")
+
+    dot_prod = x1*x2 + y1*y2
+    cross = x1*y2 - y1*x2
+
+    angle_rad = atan2(abs(cross), dot_prod)
     return degrees(angle_rad)
