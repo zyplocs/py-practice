@@ -5,18 +5,18 @@ from math import hypot
 EPSILON = 1e-6  # close to zero threshold
 
 def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vector2D:
-    v1 = gd._coerce_vec(vec1, "vec1")
-    v2 = gd._coerce_vec(vec2, "vec2")
+    v1 = gd.coerce_vec2d(vec1, "vec1")
+    v2 = gd.coerce_vec2d(vec2, "vec2")
 
     return (v1[0] + v2[0], v1[1] + v2[1])
 
 def vector_mag(vec: Vector2DLike, *, name: str="vec") -> float:
-    x, y = gd._coerce_vec(vec, name)
+    x, y = gd.coerce_vec2d(vec, name)
 
     return hypot(x, y)
 
 def unit_vector(vec: Vector2DLike, *, name: str="vec") -> Vector2D:
-    x, y = gd._coerce_vec(vec, name)
+    x, y = gd.coerce_vec2d(vec, name)
     mag = hypot(x, y)
     if mag <= EPSILON:
         raise ValueError(f"{name} magnitude is too small to normalize (<= {EPSILON})!")
@@ -35,8 +35,8 @@ def main():
             break
 
         try:
-            vec1 = gd.parse_vec(vec1_raw, "Vector 1")
-            vec2 = gd.parse_vec(vec2_raw, "Vector 2")
+            vec1 = gd.parse_vec2d(vec1_raw, "Vector 1")
+            vec2 = gd.parse_vec2d(vec2_raw, "Vector 2")
 
             new_vec = vector_sum(vec1, vec2)
             new_mag = vector_mag(new_vec)

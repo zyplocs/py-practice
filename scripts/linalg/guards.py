@@ -8,7 +8,7 @@ type Vector2DLike = tuple[ScalarLike, ScalarLike]
 class NumericTypeError(TypeError):
     """Raised when a parameter expects a numeric argument but receives a non-numeric argument."""
 
-def _to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
+def to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
     try:
         if isinstance(usr_input, bool):
             raise TypeError("Booleans are not accepted!")
@@ -22,16 +22,16 @@ def _to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
 
     return floating
 
-def _coerce_vec(vec: Vector2DLike, name: str) -> Vector2D:
+def coerce_vec2d(vec: Vector2DLike, name: str) -> Vector2D:
     if len(vec) != 2:
         raise ValueError(f"{name} must have length 2; got {len(vec)}")
 
-    x = _to_float(vec[0], name=f"{name} x")
-    y = _to_float(vec[1], name=f"{name} y")
+    x = to_float(vec[0], name=f"{name} x")
+    y = to_float(vec[1], name=f"{name} y")
 
     return (x, y)
 
-def parse_vec(s: str, name: str) -> Vector2D:
+def parse_vec2d(s: str, name: str) -> Vector2D:
     s = s.strip()
     if s[0] == "(" and s[-1] == ")":
         s = s[1:-1]
@@ -39,7 +39,7 @@ def parse_vec(s: str, name: str) -> Vector2D:
     dims = [d.strip() for d in s.split(",")]
     if len(dims) != 2:
         raise ValueError(f"{name} must be two comma-separated numbers!")
-    x = _to_float(dims[0], name=f"{name} x")
-    y = _to_float(dims[1], name=f"{name} y")
+    x = to_float(dims[0], name=f"{name} x")
+    y = to_float(dims[1], name=f"{name} y")
 
     return (x, y)
