@@ -4,10 +4,16 @@ import guards as gd
 import vectors2d as v2
 
 def dot_2d(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
-    x = gd.coerce_vec2d(vec1, "vec1")
-    y = gd.coerce_vec2d(vec2, "vec2")
+    x1, y1 = gd.coerce_vec2d(vec1, "vec1")
+    x2, y2 = gd.coerce_vec2d(vec2, "vec2")
 
-    return sum(x_i*y_i for x_i, y_i in zip(x, y))
+    return x1*x2 + y1*y2
+
+def cross_2d(vec1: Vector2DLike, vec2: Vector2DLike) -> float:
+    x1, y1 = gd.coerce_vec2d(vec1, "vec1")
+    x2, y2 = gd.coerce_vec2d(vec2, "vec2")
+
+    return x1*y2 - y1*x2
 
 def l2_norm(vec: Vector2DLike, *, name: str="vec") -> float:
     x, y = gd.coerce_vec2d(vec, name)
@@ -33,8 +39,8 @@ def angle_2d(vec1: Vector2DLike, vec2: Vector2DLike, *, eps: float | None=None) 
     if m1 <= threshold or m2 <= threshold:
         raise ValueError(f"Vector magnitude is too small to compute angle (<= {threshold})!")
 
-    dot_prod = x1*x2 + y1*y2
-    cross = x1*y2 - y1*x2
+    dot_prod = dot_2d(vec1, vec2)
+    cross_prod = cross_2d(vec1, vec2)
 
-    angle_rad = atan2(abs(cross), dot_prod)
+    angle_rad = atan2(abs(cross_prod), dot_prod)
     return degrees(angle_rad)
