@@ -1,6 +1,6 @@
 from __future__ import annotations
 import guards as gd
-from guards import NumericTypeError, ScalarLike, Vector2DLike, Vec2D
+from guards import NumericTypeError, ScalarLike, Vector2DLike
 from math import hypot, atan2, degrees
 
 EPSILON = 1e-6  # close to zero threshold
@@ -66,24 +66,6 @@ class Vector2D:
             angle_rad = atan2(abs(cross_prod), dot_prod)
         return degrees(angle_rad)
 
-def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vec2D:
-    v1 = gd.coerce_vec2d(vec1, "vec1")
-    v2 = gd.coerce_vec2d(vec2, "vec2")
-
-    return (v1[0] + v2[0], v1[1] + v2[1])
-
-def vector_mag(vec: Vector2DLike, *, name: str="vec") -> float:
-    x, y = gd.coerce_vec2d(vec, name)
-
-    return hypot(x, y)
-
-def unit_vector(vec: Vector2DLike, *, name: str="vec") -> Vec2D:
-    x, y = gd.coerce_vec2d(vec, name)
-    mag = hypot(x, y)
-    if mag <= EPSILON:
-        raise ValueError(f"{name} magnitude is too small to normalize (<= {EPSILON})!")
-
-    return (x/mag, y/mag)
 
 def main():
     print("Calculate an output vector from two inputs. Separate dimensions with a comma")
