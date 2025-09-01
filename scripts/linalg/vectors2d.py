@@ -1,3 +1,4 @@
+from __future__ import annotations
 import guards as gd
 from guards import NumericTypeError, Vector2DLike, Vector2D
 from math import hypot

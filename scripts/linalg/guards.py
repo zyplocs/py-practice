@@ -1,4 +1,5 @@
-from typing import SupportsFloat
+from __future__ import annotations
+from typing import SupportsFloat, TYPE_CHECKING
 from math import isfinite
 
 type Vector2D = tuple[float, float]
