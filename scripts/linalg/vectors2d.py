@@ -65,7 +65,7 @@ class Vector2D:
         other_vec = self._coerce(other, name="other")
         return self.x * other_vec.y - self.y * other_vec.x
 
-    def angle_to(self, other: Vector2DLike, *, signed: bool = False) -> float:
+    def angle_to(self, other: Vector2DLike, *, signed: bool = False, degs: bool = True) -> float:
         other_vec = self._coerce(other, name="other")
         if self.magnitude <= EPSILON or other_vec.magnitude <= EPSILON:
             raise ValueError("Cannot compute angle for a zero-magnitude vector!")
@@ -77,6 +77,10 @@ class Vector2D:
             angle_rad = atan2(cross_prod, dot_prod)
         else:
             angle_rad = atan2(abs(cross_prod), dot_prod)
+        
+        if not degs:
+            return angle_rad
+            
         return degrees(angle_rad)
 
 
