@@ -23,7 +23,7 @@ class Vector2D:
         except (TypeError, IndexError):
             raise TypeError(f"{name} must be a Vector2D or a tuple of two numbers, not {type(other).__name__}")
 
-    def __repr___(self) -> str:
+    def __repr__(self) -> str:
         return f"Vector2D({self.x}, {self.y})"
 
     def __add__(self, other: Vector2DLike) -> Vector2D:
