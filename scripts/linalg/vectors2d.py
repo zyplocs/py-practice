@@ -1,7 +1,7 @@
 from __future__ import annotations
 import guards as gd
 from guards import NumericTypeError, ScalarLike, Vector2DLike, Vec2D
-from math import hypot
+from math import hypot, atan2, degrees
 
 EPSILON = 1e-6  # close to zero threshold
 
@@ -33,6 +33,37 @@ class Vector2D:
         if abs(scal) < EPSILON:
             raise ValueError("Cannot divide vector by a near-zero scalar!")
         return Vector2D(self.x / scal, self.y / scal)
+
+    @property
+    def magnitude(self) -> float:
+        return hypot(self.x, self.y)
+
+    def normalize(self) -> Vector2D:
+        mag = self.magnitude
+        if mag <= EPSILON:
+            raise ValueError(f"Vector magnitude is too small to normalize (<= {EPSILON})!")
+
+    def dot(self, other: Vector2DLike) -> float:
+        other_vec = gd.coerce_vec2d(other, name="other")
+        return self.x * other_vec.x + self.y * other_vec.y
+
+    def cross(self, other: Vector2DLike) -> float:
+        other_vec = gd.coerce_vec2d(other, name="other")
+        return self.x * other_vec.y - self.y * other_vec.x
+
+    def angle_to(self, other: Vector2DLike, *, signed: bool = False) -> float:
+        other_vec = gd.coerce_vec2d(other, name="other")
+        if self.magnitude <= EPSILON or other_vec.magnitude <= EPSILON:
+            raise ValueError("Cannot compute angle for a zero-magnitude vector!")
+
+        dot_prod = self.dot(other_vec)
+        cross_prod = self.cross(other_vec)
+
+        if signed:
+            angle_rad = atan2(cross_prod, dot_prod)
+        else:
+            angle_rad = atan2(abs(cross_prod), dot_prod)
+        return degrees(angle_rad)
 
 def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vec2D:
     v1 = gd.coerce_vec2d(vec1, "vec1")
