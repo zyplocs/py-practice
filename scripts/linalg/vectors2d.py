@@ -10,15 +10,28 @@ class Vector2D:
         self.x = x
         self.y = y
 
+    @classmethod
+    def _coerce(cls, other: Vector2DLike, name: str) -> Vector2D:
+        if isinstance(other, cls):
+            return other
+        try:
+            if len(other) != 2:
+                raise TypeError
+            x = gd.to_float(other[0], name=f"{name} x")
+            y = gd.to_float(other[1], name=f"{name} y")
+            return cls(x, y)
+        except (TypeError, IndexError):
+            raise TypeError(f"{name} must be a Vector2D or a tuple of two numbers, not {type(other).__name__}")
+
     def __repr___(self) -> str:
         return f"Vector2D({self.x}, {self.y})"
 
     def __add__(self, other: Vector2DLike) -> Vector2D:
-        other_vec = gd.coerce_vec2d(other, name="other")
+        other_vec = self._coerce(other, name="other")
         return Vector2D(self.x + other_vec.x, self.y + other_vec.y)
 
     def __sub__(self, other: Vector2DLike) -> Vector2D:
-        other_vec = gd.coerce_vec2d(other, name="other")
+        other_vec = self._coerce(other, name="other")
         return Vector2D(self.x - other_vec.x, self.y - other_vec.y)
 
     def __mul__(self, scalar: ScalarLike) -> Vector2D:
@@ -45,15 +58,15 @@ class Vector2D:
         return self / mag
 
     def dot(self, other: Vector2DLike) -> float:
-        other_vec = gd.coerce_vec2d(other, name="other")
+        other_vec = self._coerce(other, name="other")
         return self.x * other_vec.x + self.y * other_vec.y
 
     def cross(self, other: Vector2DLike) -> float:
-        other_vec = gd.coerce_vec2d(other, name="other")
+        other_vec = self._coerce(other, name="other")
         return self.x * other_vec.y - self.y * other_vec.x
 
     def angle_to(self, other: Vector2DLike, *, signed: bool = False) -> float:
-        other_vec = gd.coerce_vec2d(other, name="other")
+        other_vec = self._coerce(other, name="other")
         if self.magnitude <= EPSILON or other_vec.magnitude <= EPSILON:
             raise ValueError("Cannot compute angle for a zero-magnitude vector!")
 
