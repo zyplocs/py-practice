@@ -42,6 +42,7 @@ class Vector2D:
         mag = self.magnitude
         if mag <= EPSILON:
             raise ValueError(f"Vector magnitude is too small to normalize (<= {EPSILON})!")
+        return self / mag
 
     def dot(self, other: Vector2DLike) -> float:
         other_vec = gd.coerce_vec2d(other, name="other")
@@ -99,13 +100,13 @@ def main():
             vec1 = gd.parse_vec2d(vec1_raw, "Vector 1")
             vec2 = gd.parse_vec2d(vec2_raw, "Vector 2")
 
-            new_vec = vector_sum(vec1, vec2)
-            new_mag = vector_mag(new_vec)
-            new_unit_vec = unit_vector(new_vec)
+            new_vec = vec1 + vec2
+            new_mag = new_vec.magnitude
+            new_unit_vec = new_vec.normalize()
 
-            print(f"Sum vector: ({new_vec[0]:.2f}, {new_vec[1]:.2f})")
+            print(f"Sum vector: ({new_vec.x:.2f}, {new_vec.y:.2f})")
             print(f"Magnitude: {new_mag:.3f}")
-            print(f"Unit vector: ({new_unit_vec[0]:.2f}, {new_unit_vec[1]:.2f})")
+            print(f"Unit vector: ({new_unit_vec.x:.2f}, {new_unit_vec.y:.2f})")
             break
         except NumericTypeError as e:
             print(f"Input error: {e}")
