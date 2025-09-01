@@ -1,6 +1,6 @@
 from __future__ import annotations
 import guards as gd
-from guards import NumericTypeError, Vector2DLike, Vec2D
+from guards import NumericTypeError, ScalarLike, Vector2DLike, Vec2D
 from math import hypot
 
 EPSILON = 1e-6  # close to zero threshold
@@ -9,6 +9,30 @@ class Vector2D:
     def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
+
+    def __repr___(self) -> str:
+        return f"Vector2D({self.x}, {self.y})"
+
+    def __add__(self, other: Vector2DLike) -> Vector2D:
+        other_vec = gd.coerce_vec2d(other, name="other")
+        return Vector2D(self.x + other_vec.x, self.y + other_vec.y)
+
+    def __sub__(self, other: Vector2DLike) -> Vector2D:
+        other_vec = gd.coerce_vec2d(other, name="other")
+        return Vector2D(self.x - other_vec.x, self.y - other_vec.y)
+
+    def __mul__(self, scalar: ScalarLike) -> Vector2D:
+        scal = gd.to_float(scalar, name="scalar")
+        return Vector2D(self.x * scal, self.y * scal)
+
+    def __rmul__(self, scalar: ScalarLike) -> Vector2D:
+        return self.__mul__(scalar)
+
+    def __truediv__(self, scalar: ScalarLike) -> Vector2D:
+        scal = gd.to_float(scalar, name="scalar")
+        if abs(scal) < EPSILON:
+            raise ValueError("Cannot divide vector by a near-zero scalar!")
+        return Vector2D(self.x / scal, self.y / scal)
 
 def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vec2D:
     v1 = gd.coerce_vec2d(vec1, "vec1")
