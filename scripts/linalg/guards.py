@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import SupportsFloat, TYPE_CHECKING
 from math import isfinite
 
-type Vector2D = tuple[float, float]
+type Vec2D = tuple[float, float]
 type ScalarLike = SupportsFloat | str
 type Vector2DLike = tuple[ScalarLike, ScalarLike]
 
@@ -23,7 +23,7 @@ def to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
 
     return floating
 
-def coerce_vec2d(vec: Vector2DLike, name: str) -> Vector2D:
+def coerce_vec2d(vec: Vector2DLike, name: str) -> Vec2D:
     if len(vec) != 2:
         raise ValueError(f"{name} must have length 2; got {len(vec)}")
 
@@ -32,7 +32,7 @@ def coerce_vec2d(vec: Vector2DLike, name: str) -> Vector2D:
 
     return (x, y)
 
-def parse_vec2d(s: str, name: str) -> Vector2D:
+def parse_vec2d(s: str, name: str) -> Vec2D:
     s = s.strip()
     if s[0] == "(" and s[-1] == ")":
         s = s[1:-1]

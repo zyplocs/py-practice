@@ -1,11 +1,16 @@
 from __future__ import annotations
 import guards as gd
-from guards import NumericTypeError, Vector2DLike, Vector2D
+from guards import NumericTypeError, Vector2DLike, Vec2D
 from math import hypot
 
 EPSILON = 1e-6  # close to zero threshold
 
-def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vector2D:
+class Vector2D:
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
+
+def vector_sum(vec1: Vector2DLike, vec2: Vector2DLike) -> Vec2D:
     v1 = gd.coerce_vec2d(vec1, "vec1")
     v2 = gd.coerce_vec2d(vec2, "vec2")
 
@@ -16,7 +21,7 @@ def vector_mag(vec: Vector2DLike, *, name: str="vec") -> float:
 
     return hypot(x, y)
 
-def unit_vector(vec: Vector2DLike, *, name: str="vec") -> Vector2D:
+def unit_vector(vec: Vector2DLike, *, name: str="vec") -> Vec2D:
     x, y = gd.coerce_vec2d(vec, name)
     mag = hypot(x, y)
     if mag <= EPSILON:
