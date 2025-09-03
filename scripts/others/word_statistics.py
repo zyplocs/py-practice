@@ -12,5 +12,5 @@ def word_stats(sentence: str) -> tuple[int, float]:
     if word_count == 0:
         raise ValueError("Zero words in the sentence!")
 
-    avg_length = (sum(len(word) for word in words) / word_count)
+    avg_length = sum(len(word) for word in words) / word_count
     return word_count, avg_length
