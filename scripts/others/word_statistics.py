@@ -8,9 +8,10 @@ def word_stats(sentence: str) -> tuple[int, float]:
         raise ValueError("Empty input!")
 
     words = [w for w in re.split(r"[^\w'-]+", sentence) if w]
-    word_count = len(words)
+    cleaned_words = [w.replace("-", "").replace("'", "") for w in words]
+    word_count = len(cleaned_words)
     if word_count == 0:
         raise ValueError("Zero words in the sentence!")
 
-    avg_length = sum(len(word) for word in words) / word_count
+    avg_length = sum(len(word) for word in cleaned_words) / word_count
     return word_count, avg_length
