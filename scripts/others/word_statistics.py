@@ -7,7 +7,7 @@ def word_stats(sentence: str) -> tuple[int, float]:
     if not sentence.strip():
         raise ValueError("Empty input!")
 
-    words = [w for w in re.split(r'\W+', sentence) if w]
+    words = [w for w in re.split(r"[^\w'-]+", sentence) if w]
     word_count = len(words)
     if word_count == 0:
         raise ValueError("Zero words in the sentence!")
