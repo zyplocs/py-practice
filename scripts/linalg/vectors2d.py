@@ -1,7 +1,7 @@
 from __future__ import annotations
 import guards as gd
 from guards import NumericTypeError, ScalarLike, Vector2DLike
-from math import hypot, atan2, degrees
+import math
 
 EPSILON = 1e-6  # close to zero threshold
 
@@ -49,7 +49,7 @@ class Vector2D:
 
     @property
     def magnitude(self) -> float:
-        return hypot(self.x, self.y)
+        return math.hypot(self.x, self.y)
 
     def normalize(self) -> Vector2D:
         mag = self.magnitude
@@ -74,14 +74,14 @@ class Vector2D:
         cross_prod = self.cross(other_vec)
 
         if signed:
-            angle_rad = atan2(cross_prod, dot_prod)
+            angle_rad = math.atan2(cross_prod, dot_prod)
         else:
-            angle_rad = atan2(abs(cross_prod), dot_prod)
+            angle_rad = math.atan2(abs(cross_prod), dot_prod)
         
         if not degs:
             return angle_rad
             
-        return degrees(angle_rad)
+        return math.degrees(angle_rad)
 
 
 def main():
