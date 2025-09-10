@@ -64,6 +64,17 @@ class Vector2D:
     def cross(self, other: Vector2DLike) -> float:
         other_vec = self._coerce(other, name="other")
         return self.x * other_vec.y - self.y * other_vec.x
+    
+    def projection_onto(self, other: Vector2DLike) -> Vector2D:
+        other_vec = self._coerce(other, name="other")
+        denom = other_vec.x * other_vec.x + other_vec.y * other_vec.y
+        if denom <= EPSILON * EPSILON:
+            raise ValueError("Cannot project onto a near-zero vector!")
+        scale = self.dot(other_vec) / denom
+        return Vector2D(other_vec.x * scale, other_vec.y * scale)
+
+    def rejection_from(self, other: Vector2DLike) -> Vector2D:
+        return self - self.projection_onto(other)
 
     def angle_to(self, other: Vector2DLike, *, signed: bool = False, degs: bool = True) -> float:
         other_vec = self._coerce(other, name="other")
