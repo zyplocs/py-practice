@@ -81,7 +81,7 @@ class Vector2D:
     def rejection_from(self, other: Vector2DLike) -> Vector2D:
         return self - self.projection_onto(other)
 
-    def angle_to(self, other: Vector2DLike, *, signed: bool = False, degs: bool = True) -> float:
+    def angle_to(self, other: Vector2DLike, *, signed: bool = True, degrees: bool = True) -> float:
         other_vec = self._coerce(other, name="other")
         if self.magnitude <= EPSILON or other_vec.magnitude <= EPSILON:
             raise ValueError("Cannot compute angle for a zero-magnitude vector!")
@@ -94,10 +94,13 @@ class Vector2D:
         else:
             angle_rad = math.atan2(abs(cross_prod), dot_prod)
         
-        if not degs:
+        if not degrees:
             return angle_rad
             
         return math.degrees(angle_rad)
+
+    def angle_between(self, other: Vector2DLike, *, degrees: bool = True) -> float:
+        return self.angle_to(other, signed=False, degrees=degrees)
 
 
 def main():
