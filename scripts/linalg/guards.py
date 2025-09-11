@@ -3,7 +3,10 @@ from typing import SupportsFloat, TYPE_CHECKING
 from math import isfinite
 
 if TYPE_CHECKING:
-    from vectors2d import Vector2D
+    try:
+        from.vectors2d import Vector2D
+    except ImportError:
+        from vectors2d import Vector2D
 
 type ScalarLike = SupportsFloat | str
 type Vector2DLike = Vector2D | tuple[ScalarLike, ScalarLike]
@@ -28,7 +31,10 @@ def to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
 
 
 def parse_vec2d(s: str, name: str) -> Vector2D:
-    from vectors2d import Vector2D
+    try:
+        from.vectors2d import Vector2D
+    except ImportError:
+        from vectors2d import Vector2D
 
     s = s.strip()
     if s.startswith("(") and s.endswith(")"):
