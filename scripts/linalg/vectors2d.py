@@ -6,9 +6,10 @@ import math
 EPSILON = 1e-6  # close to zero threshold
 
 class Vector2D:
+    __slots__ = ('x', 'y')
     def __init__(self, x: float, y: float):
-        self.x = x
-        self.y = y
+        self.x = gd.to_float(x, name="x")
+        self.y = gd.to_float(y, name="y")
 
     @classmethod
     def _coerce(cls, other: Vector2DLike, name: str) -> Vector2D:
