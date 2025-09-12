@@ -1,3 +1,3 @@
 # Eli's Python Practice Repo
 
-I enjoy creating relatively simple, standalone Python scripts as a means to gain real-world programming experience. This repository functions as a base for these scripts, allowing me to work on them across multiple devices.
+I write small and sometimes standalone Python 3.13+ scripts to practice programming, often around vision science and linear algebra. This repo is a lightweight, cross-device base for those scripts (see `scripts/linalg/` and `scripts/others/`); run any file directly, e.g., `python scripts/others/temp_convert.py`.
