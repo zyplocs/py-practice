@@ -80,6 +80,14 @@ class Vector2D:
 
     def rejection_from(self, other: Vector2DLike) -> Vector2D:
         return self - self.projection_onto(other)
+    
+    def component_along(self, other: Vector2DLike) -> float:
+        """Return the scalar component of `self` along `other`."""
+        other_vec = self._coerce(other, name="other")
+        denom = other_vec.x**2 + other_vec.y**2
+        if denom <= EPSILON**2:
+            raise ValueError("Cannot compute component along a near-zero vector!")
+        return self.dot(other_vec) / math.sqrt(denom)
 
     def angle_to(self, other: Vector2DLike, *, signed: bool = True, degrees: bool = True) -> float:
         other_vec = self._coerce(other, name="other")
