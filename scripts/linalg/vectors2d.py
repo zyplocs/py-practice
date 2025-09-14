@@ -72,8 +72,8 @@ class Vector2D:
     
     def projection_onto(self, other: Vector2DLike) -> Vector2D:
         other_vec = self._coerce(other, name="other")
-        denom = other_vec.x * other_vec.x + other_vec.y * other_vec.y
-        if denom <= EPSILON * EPSILON:
+        denom = other_vec.x**2 + other_vec.y**2
+        if denom <= EPSILON**2:
             raise ValueError("Cannot project onto a near-zero vector!")
         scale = self.dot(other_vec) / denom
         return Vector2D(other_vec.x * scale, other_vec.y * scale)
@@ -83,6 +83,7 @@ class Vector2D:
     
     def component_along(self, other: Vector2DLike) -> float:
         """Return the scalar component of `self` along `other`."""
+
         other_vec = self._coerce(other, name="other")
         denom = other_vec.x**2 + other_vec.y**2
         if denom <= EPSILON**2:
