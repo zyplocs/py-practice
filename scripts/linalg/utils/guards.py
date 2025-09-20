@@ -12,7 +12,7 @@ type ScalarLike = SupportsFloat | str
 type Vector2DLike = Vector2D | tuple[ScalarLike, ScalarLike]
 
 class NumericTypeError(TypeError):
-    """Raised when a parameter expects a numeric argument but receives a non-numeric argument."""
+    """Raised when a numeric parameter receives a non-numeric argument."""
 
 
 def to_float(usr_input: SupportsFloat | str, *, name: str) -> float:
