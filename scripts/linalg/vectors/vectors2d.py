@@ -1,11 +1,7 @@
 from __future__ import annotations
 import math
-try:
-    from . import guards as gd
-    from .guards import NumericTypeError, ScalarLike, Vector2DLike
-except ImportError:
-    import guards as gd
-    from guards import NumericTypeError, ScalarLike, Vector2DLike
+from ..utils import guards as gd
+from ..utils.guards import NumericTypeError, ScalarLike, Vector2DLike
 
 EPSILON = 1e-6  # close to zero threshold
 
