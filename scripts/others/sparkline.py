@@ -5,7 +5,7 @@ from typing import Iterable
 def sparkline(
     seq: Iterable[float] | None, 
     *, 
-    levels: str = "▁▂▃▅▆▇", 
+    levels: str = "▁▂▃▄▅▆▇", 
     lo: float | None = None,
     hi: float | None = None,
     nan_char: str = "·"
