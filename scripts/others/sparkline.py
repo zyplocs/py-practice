@@ -3,9 +3,9 @@ from math import isfinite
 from typing import Iterable
 
 def sparkline(
-    seq: Iterable[float] | None, 
-    *, 
-    levels: str = "▁▂▃▄▅▆▇", 
+    seq: Iterable[float] | None,
+    *,
+    levels: str = "▁▂▃▄▅▆▇",
     lo: float | None = None,
     hi: float | None = None,
     nan_char: str = "·"
@@ -20,7 +20,7 @@ def sparkline(
     finite_vals = [x for x in xs if x is not None and isfinite(x)]
     if not finite_vals:
         return "".join(nan_char for _ in xs)
-    
+
     _lo = min(finite_vals) if lo is None else float(lo)
     _hi = max(finite_vals) if hi is None else float(hi)
 
@@ -35,7 +35,7 @@ def sparkline(
             continue
         if flat:
             k = round(mid_idx)
-        else: 
+        else:
             t = (float(v) - _lo) / (_hi - _lo)
             t = 0.0 if t < 0.0 else 1.0 if t > 1.0 else t
             k = round(t * (len(levels) - 1))
